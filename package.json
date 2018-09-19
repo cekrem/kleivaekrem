@@ -8,9 +8,11 @@
     "react-scripts": "1.1.5"
   },
   "scripts": {
+    "start-php": "cd php/ && php -S 0.0.0.0:5000",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rsync -a php/ build/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "proxy": "http://localhost:5000/"
 }
