@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 
 class App extends Component {
+  defaultBackground = "images/1.jpeg";
+  aboutBackground = "about.jpg";
   state = {
     index: 0,
-    backgrounds: ["images/1.jpeg"],
+    backgrounds: [this.defaultBackground],
+    backgroundLoaded: false
   };
 
   handleClick = () => {
@@ -30,7 +33,24 @@ class App extends Component {
     return next === prev ? this.random(prev, max) : next;
   };
 
+  backgroundLoaded = () =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => reject();
+      img.src =
+        window.location.pathname === "/om"
+          ? this.aboutBackground
+          : this.defaultBackground;
+    });
+
   componentDidMount() {
+    this.backgroundLoaded().finally(() => {
+      this.setState({
+        backgroundLoaded: true
+      });
+    });
+
     fetch("/images.php")
       .then(res => res.json())
       .then(res => {
@@ -48,18 +68,21 @@ class App extends Component {
   }
 
   render() {
-    const { backgrounds, index } = this.state;
+    const { backgrounds, index, backgroundLoaded } = this.state;
     const isAbout = window.location.pathname === "/om";
 
     return (
-      <div className="wrapper" onClick={this.handleClick}>
+      <div
+        className={`wrapper${backgroundLoaded ? " loaded" : ""}`}
+        onClick={this.handleClick}
+      >
         <div className="logo">
           <span onClick={this.handleLogoClick}>Kleiva + Ekrem</span>
         </div>
 
         <div
           className={`background${isAbout ? " active" : ""}`}
-          style={{ backgroundImage: "url(about.jpg)" }}
+          style={{ backgroundImage: `url(${this.aboutBackground})` }}
         />
 
         {backgrounds.map((url, i) => (
