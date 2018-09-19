@@ -23,7 +23,7 @@ class App extends Component {
     if (window.location.pathname === "/about") {
       return this.handleClick();
     }
-    window.history.pushState(null, "", "om");
+    window.history.pushState(null, "", "about");
     e.stopPropagation();
     this.forceUpdate();
   };
