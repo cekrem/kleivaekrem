@@ -20,7 +20,7 @@ class App extends Component {
   };
 
   handleLogoClick = e => {
-    if (window.location.pathname === "/om") {
+    if (window.location.pathname === "/about") {
       return this.handleClick();
     }
     window.history.pushState(null, "", "om");
@@ -39,7 +39,7 @@ class App extends Component {
       img.onload = () => resolve();
       img.onerror = () => reject();
       img.src =
-        url || window.location.pathname === "/om"
+        url || window.location.pathname === "/about"
           ? this.aboutBackground
           : this.defaultBackground;
     });
@@ -71,7 +71,7 @@ class App extends Component {
 
   render() {
     const { backgrounds, index, backgroundLoaded } = this.state;
-    const isAbout = window.location.pathname === "/om";
+    const isAbout = window.location.pathname === "/about";
 
     return (
       <div
