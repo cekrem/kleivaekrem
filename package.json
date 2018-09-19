@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "preact": "^8.3.1",
+    "preact-compat": "^3.18.4",
     "react": "^16.5.1",
+    "react-app-rewire-preact": "^1.0.1",
+    "react-app-rewired": "^1.6.2",
     "react-dom": "^16.5.1",
     "react-scripts": "1.1.5"
   },
@@ -11,8 +15,8 @@
     "start-php": "cd php/ && php -S 0.0.0.0:5000",
     "start": "react-scripts start",
     "build": "react-scripts build && rsync -a php/ build/",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build-preact": "react-app-rewired build && rsync -a php/ build/",
+    "test": "react-scripts test --env=jsdom"
   },
   "proxy": "http://localhost:5000/"
 }
