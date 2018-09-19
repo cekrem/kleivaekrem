@@ -3,14 +3,33 @@ import React, { Component } from "react";
 class App extends Component {
   state = {
     index: 0,
-    backgrounds: ["images/1.jpeg"]
+    backgrounds: ["images/1.jpeg"],
+    about: "about.jpg"
   };
 
-  handleClick = () =>
+  handleClick = () => {
+    if (window.location.pathname.length > 1) {
+      window.history.pushState(null, "", "/");
+    }
     this.setState(state => ({
       ...state,
-      index: Math.floor(Math.random() * state.backgrounds.length)
+      index: this.random(state.index, state.backgrounds.length)
     }));
+  };
+
+  handleLogoClick = e => {
+    if (window.location.pathname === "/om") {
+      return this.handleClick();
+    }
+    window.history.pushState(null, "", "om");
+    e.stopPropagation();
+    this.forceUpdate();
+  };
+
+  random = (prev, max) => {
+    const next = Math.floor(Math.random() * max);
+    return next === prev ? this.random(prev, max) : next;
+  };
 
   componentDidMount() {
     fetch("/images.php")
@@ -31,14 +50,23 @@ class App extends Component {
 
   render() {
     const { backgrounds, index } = this.state;
+    const isAbout = window.location.pathname === "/om";
+
     return (
       <div className="wrapper" onClick={this.handleClick}>
-        <div className="logo">Kleiva + Ekrem</div>
+        <div className="logo">
+          <span onClick={this.handleLogoClick}>Kleiva + Ekrem</span>
+        </div>
+
+        <div
+          className={`background${isAbout ? " active" : ""}`}
+          style={{ backgroundImage: "url(about.jpg)" }}
+        />
 
         {backgrounds.map((url, i) => (
           <div
             key={url}
-            className={`background${index === i ? " active" : ""}`}
+            className={`background${!isAbout && index === i ? " active" : ""}`}
             style={{ backgroundImage: `url(${url})` }}
           />
         ))}
