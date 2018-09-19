@@ -4,7 +4,6 @@ class App extends Component {
   state = {
     index: 0,
     backgrounds: ["images/1.jpeg"],
-    about: "about.jpg"
   };
 
   handleClick = () => {
