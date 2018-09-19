@@ -33,13 +33,13 @@ class App extends Component {
     return next === prev ? this.random(prev, max) : next;
   };
 
-  backgroundLoaded = () =>
+  backgroundLoaded = url =>
     new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve();
       img.onerror = () => reject();
       img.src =
-        window.location.pathname === "/om"
+        url || window.location.pathname === "/om"
           ? this.aboutBackground
           : this.defaultBackground;
     });
@@ -58,10 +58,12 @@ class App extends Component {
           .sort(() => Math.random() - Math.random())
           .forEach((background, index) => {
             setTimeout(() => {
-              this.setState(state => ({
-                ...state,
-                backgrounds: [...new Set([...state.backgrounds, background])]
-              }));
+              this.backgroundLoaded(background).then(() =>
+                this.setState(state => ({
+                  ...state,
+                  backgrounds: [...new Set([...state.backgrounds, background])]
+                }))
+              );
             }, index > 3 ? index * 1000 : 0);
           });
       });
@@ -73,7 +75,7 @@ class App extends Component {
 
     return (
       <div
-        className={`wrapper${backgroundLoaded ? " loaded" : ""}`}
+        className={`wrapper${!backgroundLoaded ? " loading" : ""}`}
         onClick={this.handleClick}
       >
         <div className="logo">

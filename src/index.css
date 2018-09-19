@@ -20,14 +20,8 @@ body {
     text-align: center;
 }
 
-.wrapper {
-    opacity: 0;
-    will-change: opacity;
-    transition: opacity 0.5s linear;
-}
-
-.wrapper.loaded {
-    opacity: 1;
+.wrapper.loading .background {
+    opacity: 0 !important;
 }
 
 .background {
