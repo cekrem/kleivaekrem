@@ -1,7 +1,28 @@
 import React, { Component } from "react";
 
+const visueltText = [
+  <p>
+    Gull Visuelt 2018 <br/> Årets studentarbeid: <br/> Braut –en elegi over en okse og en
+    gård <br/> Malin Kleiva
+  </p>,
+  <p>
+    Gull Visuelt 2016 <br/> Årets studentarbeid: <br/> Tøyenflora <br/> Birgitte Kolden Ekrem
+  </p>,
+  <p>
+    Nominasjon Visuelt 2016 <br/>
+    Årets studentarbeid: <br/>
+    Visuell identitet til
+    avgangsutstilling for <br/> Design v/ Kunsthøgskolen i Oslo <br/> Malin Kleiva, Anna
+    Prestsæther og Ida Christensen
+  </p>,
+  <p>
+    Nominasjon Visuelt 2014 <br/> Årets studentarbeid: <br/> Hidden Oslo, Bokdesign <br/> Malin
+    Kleiva og Birgitte Ekrem
+  </p>
+];
+
 class App extends Component {
-  defaultBackground = "images/1.jpeg";
+  defaultBackground = "default.jpg";
   aboutBackground = "about.jpg";
   state = {
     index: 0,
@@ -15,7 +36,7 @@ class App extends Component {
     }
     this.setState(state => ({
       ...state,
-      index: this.random(state.index, state.backgrounds.length)
+      index: this.next(state.index, state.backgrounds.length)
     }));
   };
 
@@ -28,10 +49,7 @@ class App extends Component {
     this.forceUpdate();
   };
 
-  random = (prev, max) => {
-    const next = Math.floor(Math.random() * max);
-    return next === prev ? this.random(prev, max) : next;
-  };
+  next = (prev, max) => (prev < max ? prev + 1 : 0);
 
   backgroundLoaded = url =>
     new Promise((resolve, reject) => {
@@ -92,8 +110,19 @@ class App extends Component {
             key={url}
             className={`background${!isAbout && index === i ? " active" : ""}`}
             style={{ backgroundImage: `url(${url})` }}
-          />
+          >
+            {url.includes("visuelt") && <div>{visueltText}</div>}
+          </div>
         ))}
+
+        <div className="footer">
+          <a
+            onClick={e => e.stopPropagation()}
+            href="mailto:post@kleivaekrem.no"
+          >
+            post@kleivaekrem.no
+          </a>
+        </div>
       </div>
     );
   }
