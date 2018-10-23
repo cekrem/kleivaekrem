@@ -60,9 +60,19 @@ html {
     z-index: 2;
 }
 
-.logo span {
+.logo {
+    width: 12rem;
+    height: 8rem;
     user-select: none;
     cursor: pointer;
+    background-repeat: no-repeat;
+    background-image: url('./logo.svg');
+    background-size: contain;
+}
+
+.logo.moved {
+    margin-left: -6rem;
+    margin-top: -4rem;
 }
 
 .footer {

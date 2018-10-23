@@ -27,10 +27,20 @@ class App extends Component {
   state = {
     index: 0,
     backgrounds: [this.defaultBackground],
-    backgroundLoaded: false
+    backgroundLoaded: false,
+    x: 0,
+    y: 0,
+    moved: false,
   };
 
-  handleClick = () => {
+  handleClick = (e) => {
+    const {clientX: x, clientY: y} = e;
+    this.setState({
+      x,
+      y,
+      moved: true,
+    });
+
     if (window.location.pathname.length > 1) {
       window.history.pushState(null, "", "/");
     }
@@ -96,9 +106,10 @@ class App extends Component {
         className={`wrapper${!backgroundLoaded ? " loading" : ""}`}
         onClick={this.handleClick}
       >
-        <div className="logo">
-          <span onClick={this.handleLogoClick}>Kleiva + Ekrem</span>
-        </div>
+        <div className={`logo${this.state.moved ? ' moved' : ''}`} style={{
+          left: this.state.x,
+          top: this.state.y,
+        }}/>
 
         <div
           className={`background${isAbout ? " active" : ""}`}
