@@ -97,6 +97,10 @@ html {
   float: left;
 }
 
+.project.mobile {
+  display: none;
+}
+
 .visuelt {
   width: 50%;
   float: right;
@@ -135,6 +139,7 @@ html {
   }
 
   .project.mobile {
+    display: block;
     positon: absolute;
     text-align: center;
   }
