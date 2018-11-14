@@ -137,6 +137,20 @@ class App extends Component {
       });
   };
 
+  getProject = (index = this.state.bgIndex) => {
+    if (window.location.pathname === "/about") {
+      return false;
+    }
+    const activeBg = this.state.backgrounds[index];
+    return (
+      (activeBg || "").includes("images") &&
+      activeBg
+        .replace("images/", "")
+        .split(".")
+        .map(text => text.replace(/-/g, " "))
+    );
+  };
+
   render() {
     const {
       backgrounds,
@@ -146,18 +160,11 @@ class App extends Component {
       logoIndex,
       rotation,
       x,
-      y
+      y,
     } = this.state;
-    const activeBg = backgrounds[bgIndex];
     const logoStyle = `url(${logos[logoIndex]})`;
     const isAbout = window.location.pathname === "/about";
-    const project =
-      !isAbout &&
-      (activeBg || "").includes("images") &&
-      activeBg
-        .replace("images/", "")
-        .split(".")
-        .map(text => text.replace(/-/g, " "));
+    const project = this.getProject()
 
     return (
       <div
@@ -165,7 +172,7 @@ class App extends Component {
         onClick={this.handleClick}
       >
         {project && (
-          <div className="project">
+          <div className="project root">
             <div>{project[0]}</div>
             <div>&nbsp;</div>
             <div className="slant">{project[1]}</div>
@@ -200,6 +207,11 @@ class App extends Component {
             }`}
             style={{ backgroundImage: `url(${url})` }}
           >
+              <div className="project mobile">
+                  <div>{this.getProject(i)[0]}</div>
+                  <div>&nbsp;</div>
+                  <div className="slant">{this.getProject(i)[1]}</div>
+              </div>
             {url.includes("visuelt") && (
               <div className="visuelt">{visueltText}</div>
             )}
