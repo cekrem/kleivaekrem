@@ -2,20 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: cekrem
- * Date: 2018-09-19
- * Time: 05:30
+ * Date: 2018-11-14
+ * Time: 09:30
  */
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
-$dir = "images/";
-$images = glob($dir."*.{jpg,jpeg,png,gif}", GLOB_BRACE);
+$dir = "logos/";
+$logos = glob($dir."*.{svg, png}", GLOB_BRACE);
 $list = [];
 
-foreach($images as $image){
-	$list[] = $image;
+foreach($logos as $logo){
+	$list[] = $logo;
 }
 
-shuffle($list);
+sort($list);
 
 echo json_encode($list);

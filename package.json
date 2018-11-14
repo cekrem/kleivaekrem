@@ -18,5 +18,8 @@
     "build-preact": "react-app-rewired build && rsync -a php/ build/",
     "test": "react-scripts test --env=jsdom"
   },
-  "proxy": "http://localhost:5000/"
+  "proxy": "http://localhost:5000/",
+  "devDependencies": {
+    "prettier": "^1.15.2"
+  }
 }

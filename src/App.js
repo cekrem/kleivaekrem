@@ -1,44 +1,64 @@
 import React, { Component } from "react";
 
 const visueltText = [
-  <p>
-    Gull Visuelt 2018 <br/> Årets studentarbeid: <br/> Braut –en elegi over en okse og en
-    gård <br/> Malin Kleiva
-  </p>,
-  <p>
-    Gull Visuelt 2016 <br/> Årets studentarbeid: <br/> Tøyenflora <br/> Birgitte Kolden Ekrem
-  </p>,
-  <p>
-    Nominasjon Visuelt 2016 <br/>
-    Årets studentarbeid: <br/>
-    Visuell identitet til
-    avgangsutstilling for <br/> Design v/ Kunsthøgskolen i Oslo <br/> Malin Kleiva, Anna
-    Prestsæther og Ida Christensen
-  </p>,
-  <p>
-    Nominasjon Visuelt 2014 <br/> Årets studentarbeid: <br/> Hidden Oslo, Bokdesign <br/> Malin
-    Kleiva og Birgitte Ekrem
-  </p>
+  <div key={1} className="part">
+    <div className="slant">Gull</div>
+    <div className="slant">Visuelt</div>
+    <div className="slant">2017</div>
+    Braut
+  </div>,
+  <div key={2} className="part">
+    <div className="slant">Gull</div>
+    <div className="slant">Visuelt</div>
+    <div className="slant">2015</div>
+    Tøyenflora
+  </div>,
+  <div key={3} className="part">
+    <div className="slant">Diplom</div>
+    <div className="slant">Visuelt</div>
+    <div className="slant">2016</div>
+    <div className="slant">2013</div>
+  </div>
+];
+
+const aboutText = [
+  <div key={1} className="part">
+    Blar er et designstudio basert i Oslo,
+    <br />
+    etablert i 2018 av Birgitte K. Ekrem
+    <br />
+    og Malin Kleiva.
+  </div>,
+  <div key={2} className="part">
+    Blar utformer trykksaker, digitale flater
+    <br />
+    og visuelle identiteter.
+  </div>
 ];
 
 class App extends Component {
   defaultBackground = "default.jpg";
   aboutBackground = "about.jpg";
+  defaultLogo = "Blar_01.svg";
   state = {
-    index: 0,
+    bgIndex: 0,
+    logoIndex: 0,
     backgrounds: [this.defaultBackground],
     backgroundLoaded: false,
+    logos: [this.defaultLogo],
     x: 0,
     y: 0,
-    moved: false,
+    rotation: 0,
+    moved: false
   };
 
-  handleClick = (e) => {
-    const {clientX: x, clientY: y} = e;
+  handleClick = e => {
+    const { clientX: x, clientY: y } = e;
     this.setState({
       x,
       y,
       moved: true,
+      rotation: Math.random() * 20 - 10
     });
 
     if (window.location.pathname.length > 1) {
@@ -46,7 +66,8 @@ class App extends Component {
     }
     this.setState(state => ({
       ...state,
-      index: this.next(state.index, state.backgrounds.length)
+      bgIndex: this.next(state.bgIndex, state.backgrounds.length - 1),
+      logoIndex: this.next(state.logoIndex, state.logos.length - 1)
     }));
   };
 
@@ -61,7 +82,7 @@ class App extends Component {
 
   next = (prev, max) => (prev < max ? prev + 1 : 0);
 
-  backgroundLoaded = url =>
+  imageLoaded = url =>
     new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve();
@@ -73,65 +94,116 @@ class App extends Component {
     });
 
   componentDidMount() {
-    this.backgroundLoaded().finally(() => {
+    this.imageLoaded().finally(() => {
       this.setState({
         backgroundLoaded: true
       });
     });
 
-    fetch("/images.php")
-      .then(res => res.json())
-      .then(res => {
-        res
-          .sort(() => Math.random() - Math.random())
-          .forEach((background, index) => {
-            setTimeout(() => {
-              this.backgroundLoaded(background).then(() =>
-                this.setState(state => ({
-                  ...state,
-                  backgrounds: [...new Set([...state.backgrounds, background])]
-                }))
-              );
-            }, index > 3 ? index * 1000 : 0);
-          });
+    window.onresize = ({ target }) => {
+      this.setState({
+        x: Math.random() * target.innerWidth,
+        y: Math.random() * target.innerHeight,
+        rotation: (target.innerWidth / target.innerHeight) * 1080
       });
+    };
+
+    this.fetchAndLoad("/images.php", "backgrounds");
+    this.fetchAndLoad("/logos.php", "logos");
   }
 
+  fetchAndLoad = (path, key) => {
+    fetch(path)
+      .then(res => res.json())
+      .then(res => {
+        res.forEach((image, index) => {
+          setTimeout(
+            () => {
+              this.imageLoaded(image).then(() =>
+                this.setState(state => ({
+                  ...state,
+                  [key]: [...new Set([...state[key], image])]
+                }))
+              );
+            },
+            index > 3 ? index * 1000 : 0
+          );
+        });
+      });
+  };
+
   render() {
-    const { backgrounds, index, backgroundLoaded } = this.state;
+    const {
+      backgrounds,
+      bgIndex,
+      backgroundLoaded,
+      logos,
+      logoIndex,
+      rotation,
+      x,
+      y
+    } = this.state;
+    const activeBg = backgrounds[bgIndex];
+    const logoStyle = `url(${logos[logoIndex]})`;
     const isAbout = window.location.pathname === "/about";
+    const project =
+      !isAbout &&
+      (activeBg || "").includes("images") &&
+      activeBg
+        .replace("images/", "")
+        .split(".")
+        .map(text => text.replace(/-/g, " "));
 
     return (
       <div
         className={`wrapper${!backgroundLoaded ? " loading" : ""}`}
         onClick={this.handleClick}
       >
-        <div className={`logo${this.state.moved ? ' moved' : ''}`} style={{
-          left: this.state.x,
-          top: this.state.y,
-        }}/>
+        {project && (
+          <div className="project">
+            <div>{project[0]}</div>
+            <div>&nbsp;</div>
+            <div className="slant">{project[1]}</div>
+          </div>
+        )}
+        <div
+          onClick={this.handleLogoClick}
+          className={`logo${this.state.moved ? " moved" : ""}${
+            isAbout ? " about-logo" : ""
+          }`}
+          style={{
+            left: x,
+            top: y,
+            backgroundImage: logoStyle,
+            transform: `rotate(${rotation}deg)`
+          }}
+        />
 
         <div
           className={`background${isAbout ? " active" : ""}`}
           style={{ backgroundImage: `url(${this.aboutBackground})` }}
-        />
+        >
+          <div className="about">{aboutText}</div>
+          <div className="visuelt">{visueltText}</div>
+        </div>
 
         {backgrounds.map((url, i) => (
           <div
             key={url}
-            className={`background${!isAbout && index === i ? " active" : ""}`}
+            className={`background${
+              !isAbout && bgIndex === i ? " active" : ""
+            }`}
             style={{ backgroundImage: `url(${url})` }}
           >
-            {url.includes("visuelt") && <div>{visueltText}</div>}
+            {url.includes("visuelt") && (
+              <div className="visuelt">{visueltText}</div>
+            )}
           </div>
         ))}
 
         <div className="footer">
-          <a
-            onClick={e => e.stopPropagation()}
-            href="mailto:post@kleivaekrem.no"
-          >
-            post@kleivaekrem.no
+          <a onClick={e => e.stopPropagation()} href="mailto:mail@blar.design">
+            mail@blar.design
           </a>
         </div>
       </div>

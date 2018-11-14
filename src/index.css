@@ -1,98 +1,130 @@
 @font-face {
-    font-family: 'ITC';
-    src: url(./itc.otf) format('opentype');
+  font-family: "ITC";
+  src: url(./itc.otf) format("opentype");
 }
 
-html, body, #root, .wrapper {
-    height: 100%;
-    font-size: 12px;
+html,
+body,
+#root,
+.wrapper {
+  height: 100%;
+  font-size: 20px;
 }
 
 html {
-    font-family: 'ITC', sans-serif;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    color: #2012dd;
+  font-family: "ITC", sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color: #2012dd;
 }
 
 .wrapper.loading .background {
-    opacity: 0 !important;
+  opacity: 0 !important;
 }
 
 .background {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 1rem 1.25rem;
-    opacity: 0;
-    z-index: -2;
-    will-change: opacity;
-    transition: opacity 0.5s linear;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem 1.25rem;
+  opacity: 0;
+  z-index: -2;
+  will-change: opacity;
+  transition: opacity 0.5s linear;
 }
 
 .background div {
-    padding: 8rem 7.2rem;
-    font-family: inherit;
-    font-size: 2rem;
-}
-
-.background div p {
-    margin-top: 1rem;
+  /*padding: 8rem 7.2rem;*/
+  font-family: inherit;
 }
 
 .background.active {
-    opacity: 1;
+  opacity: 1;
 }
 
-.logo, .footer {
-    position: fixed;
-    width: 100%;
-    font-size: 2rem;
-    padding: 1rem 1.25rem;
-    z-index: 2;
+.logo,
+.footer,
+.project {
+  position: fixed;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  z-index: 2;
 }
 
 .logo {
-    width: 12rem;
-    height: 8rem;
-    user-select: none;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-image: url('./logo.svg');
-    background-size: contain;
+  width: 12rem;
+  height: 8rem;
+  user-select: none;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: left, top, transform, 0.3s ease;
+  will-change: left, top, transform;
 }
 
 .logo.moved {
-    margin-left: -6rem;
-    margin-top: -4rem;
+  margin-left: -6rem;
+  margin-top: -4rem;
+}
+
+.logo.about-logo:not(.moved) {
+  margin: 10rem;
 }
 
 .footer {
-    bottom: 0;
-    left: 7.2rem;
+  bottom: 0rem;
+  left: 0;
 }
 
 .footer a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project > div {
+  float: left;
+}
+
+.about,
+.visuelt {
+  overflow: visible;
+}
+
+.visuelt {
+  width: 50%;
+  float: right;
+  text-align: right;
+}
+
+.about {
+  width: 50%;
+  float: left;
+}
+
+.slant {
+  transform: skewX(-45deg);
+}
+
+.part {
+  margin-bottom: 1rem;
 }
 
 @media only screen and (max-width: 600px) {
-    .background {
-        position: relative;
-        opacity: 1;
-    }
+  .background {
+    position: relative;
+    opacity: 1;
+  }
 
-    .background div {
-        padding: 0;
-        overflow: scroll
-    }
+  .background div {
+    padding: 0;
+    overflow: scroll;
+  }
 }
