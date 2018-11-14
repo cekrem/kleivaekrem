@@ -93,11 +93,6 @@ html {
   float: left;
 }
 
-.about,
-.visuelt {
-  overflow: visible;
-}
-
 .visuelt {
   width: 50%;
   float: right;
@@ -123,8 +118,7 @@ html {
     opacity: 1;
   }
 
-  .background div {
+  .background > div {
     padding: 0;
-    overflow: scroll;
   }
 }

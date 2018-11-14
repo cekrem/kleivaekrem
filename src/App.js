@@ -74,7 +74,7 @@ class App extends Component {
 
   handleLogoClick = e => {
     if (window.location.pathname === "/about") {
-      return this.handleClick();
+      return this.handleClick(e);
     }
     window.history.pushState(null, "", "about");
     e.stopPropagation();
@@ -101,7 +101,7 @@ class App extends Component {
       });
     });
 
-    window.onresize = debounce( ({ target }) => {
+    window.onresize = debounce(({ target }) => {
       this.setState({
         x: Math.random() * target.innerWidth,
         y: Math.random() * target.innerHeight,
