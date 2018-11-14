@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import debounce from "lodash.debounce";
 
 const visueltText = [
   <div key={1} className="part">
@@ -100,16 +101,20 @@ class App extends Component {
       });
     });
 
-    window.onresize = ({ target }) => {
+    window.onresize = debounce( ({ target }) => {
       this.setState({
         x: Math.random() * target.innerWidth,
         y: Math.random() * target.innerHeight,
         rotation: (target.innerWidth / target.innerHeight) * 1080
       });
-    };
+    }, 50);
 
     this.fetchAndLoad("/images.php", "backgrounds");
     this.fetchAndLoad("/logos.php", "logos");
+  }
+
+  componentWillUnmount() {
+    window.onresize = () => undefined;
   }
 
   fetchAndLoad = (path, key) => {
