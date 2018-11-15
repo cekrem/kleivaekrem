@@ -59,7 +59,7 @@ class App extends Component {
       x,
       y,
       moved: true,
-      rotation: Math.random() * 20 - 10
+      rotation: Math.floor(Math.random() * 9) * 45
     });
 
     if (window.location.pathname.length > 1) {
@@ -102,11 +102,13 @@ class App extends Component {
     });
 
     window.onresize = debounce(({ target }) => {
-      this.setState({
+      this.setState(state => ({
+        ...state,
         x: Math.random() * target.innerWidth,
         y: Math.random() * target.innerHeight,
-        rotation: (target.innerWidth / target.innerHeight) * 1080
-      });
+        rotation: (target.innerWidth / target.innerHeight) * 1080,
+        logoIndex: this.next(state.logoIndex, state.logos.length - 1)
+      }));
     }, 50);
 
     this.fetchAndLoad("/images.php", "backgrounds");
@@ -160,11 +162,11 @@ class App extends Component {
       logoIndex,
       rotation,
       x,
-      y,
+      y
     } = this.state;
     const logoStyle = `url(${logos[logoIndex]})`;
     const isAbout = window.location.pathname === "/about";
-    const project = this.getProject()
+    const project = this.getProject();
 
     return (
       <div
@@ -207,11 +209,11 @@ class App extends Component {
             }`}
             style={{ backgroundImage: `url(${url})` }}
           >
-              <div className="project mobile">
-                  <div>{this.getProject(i)[0]}</div>
-                  <div>&nbsp;</div>
-                  <div className="slant">{this.getProject(i)[1]}</div>
-              </div>
+            <div className="project mobile">
+              <div>{this.getProject(i)[0]}</div>
+              <div>&nbsp;</div>
+              <div className="slant">{this.getProject(i)[1]}</div>
+            </div>
             {url.includes("visuelt") && (
               <div className="visuelt">{visueltText}</div>
             )}
