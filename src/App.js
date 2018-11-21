@@ -49,7 +49,6 @@ class App extends Component {
     logos: [this.defaultLogo],
     x: 0,
     y: 0,
-    rotation: 0,
     moved: false
   };
 
@@ -59,7 +58,6 @@ class App extends Component {
       x,
       y,
       moved: true,
-      rotation: Math.floor(Math.random() * 9) * 45
     });
 
     if (window.location.pathname.length > 1) {
@@ -106,7 +104,6 @@ class App extends Component {
         ...state,
         x: Math.random() * target.innerWidth,
         y: Math.random() * target.innerHeight,
-        rotation: (target.innerWidth / target.innerHeight) * 1080,
         logoIndex: this.next(state.logoIndex, state.logos.length - 1)
       }));
     }, 50);
@@ -160,7 +157,6 @@ class App extends Component {
       backgroundLoaded,
       logos,
       logoIndex,
-      rotation,
       x,
       y
     } = this.state;
@@ -181,7 +177,6 @@ class App extends Component {
           </div>
         )}
         <div
-          onClick={this.handleLogoClick}
           className={`logo${this.state.moved ? " moved" : ""}${
             isAbout ? " about-logo" : ""
           }`}
@@ -189,7 +184,6 @@ class App extends Component {
             left: x,
             top: y,
             backgroundImage: logoStyle,
-            transform: `rotate(${rotation}deg)`
           }}
         />
 

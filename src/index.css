@@ -11,10 +11,6 @@ body,
   font-size: 20px;
 }
 
-.wrapper {
-  cursor: alias;
-}
-
 html {
   font-family: "ITC", sans-serif;
   -ms-text-size-adjust: 100%;
@@ -67,7 +63,6 @@ html {
   width: 12rem;
   height: 8rem;
   user-select: none;
-  cursor: help;
   background-repeat: no-repeat;
   background-size: contain;
   transition: left, top, transform, 0.3s ease;
@@ -121,10 +116,6 @@ html {
 }
 
 @media only screen and (max-width: 600px) {
-  .wrapper, .logo {
-    cursor: default;
-  }
-
   .project.root {
     display: none;
   }
