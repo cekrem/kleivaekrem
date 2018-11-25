@@ -60,13 +60,15 @@ class App extends Component {
       moved: true,
     });
 
+    const handler = x < (window.innerWidth / 2) ? this.back : this.next; 
+
     if (window.location.pathname.length > 1) {
       window.history.pushState(null, "", "/");
     }
     this.setState(state => ({
       ...state,
-      bgIndex: this.next(state.bgIndex, state.backgrounds.length - 1),
-      logoIndex: this.next(state.logoIndex, state.logos.length - 1)
+      bgIndex: handler(state.bgIndex, state.backgrounds.length - 1),
+      logoIndex: handler(state.logoIndex, state.logos.length - 1)
     }));
   };
 
@@ -80,6 +82,7 @@ class App extends Component {
   };
 
   next = (prev, max) => (prev < max ? prev + 1 : 0);
+  back = (prev, max) => (prev === 0 ? max : prev -1); 
 
   imageLoaded = url =>
     new Promise((resolve, reject) => {
@@ -176,6 +179,7 @@ class App extends Component {
             <div className="slant">{project[1]}</div>
           </div>
         )}
+        <div className="logo-text" onClick={this.handleLogoClick}>Blar</div> 
         <div
           className={`logo${this.state.moved ? " moved" : ""}${
             isAbout ? " about-logo" : ""

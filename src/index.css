@@ -8,7 +8,7 @@ body,
 #root,
 .wrapper {
   height: 100%;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 html {
@@ -34,7 +34,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 1rem 1.25rem;
+  padding: 0.5rem 0.625rem;
   opacity: 0;
   z-index: -2;
   will-change: opacity;
@@ -42,7 +42,6 @@ html {
 }
 
 .background div {
-  /*padding: 8rem 7.2rem;*/
   font-family: inherit;
 }
 
@@ -52,10 +51,11 @@ html {
 
 .logo,
 .footer,
-.project {
+.project,
+.logo-text {
   position: fixed;
   width: 100%;
-  padding: 1rem 1.25rem;
+  padding: 0.5rem 0.625rem;
   z-index: 2;
 }
 
@@ -67,11 +67,13 @@ html {
   background-size: contain;
   transition: left, top, transform, 0.3s ease;
   will-change: left, top, transform;
-}
-
-.logo.moved {
   margin-left: -6rem;
   margin-top: -4rem;
+}
+
+.logo:not(.moved) {
+  left: 50% !important;
+  top: 50% !important;
 }
 
 .logo.about-logo:not(.moved) {
@@ -86,6 +88,11 @@ html {
 .footer a {
   text-decoration: none;
   color: inherit;
+}
+
+.project {
+  width: auto;
+  right: 0;
 }
 
 .project > div {
