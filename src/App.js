@@ -57,10 +57,10 @@ class App extends Component {
     this.setState({
       x,
       y,
-      moved: true,
+      moved: true
     });
 
-    const handler = x < (window.innerWidth / 2) ? this.back : this.next; 
+    const handler = x < window.innerWidth / 2 ? this.back : this.next;
 
     if (window.location.pathname.length > 1) {
       window.history.pushState(null, "", "/");
@@ -82,7 +82,7 @@ class App extends Component {
   };
 
   next = (prev, max) => (prev < max ? prev + 1 : 0);
-  back = (prev, max) => (prev === 0 ? max : prev -1); 
+  back = (prev, max) => (prev === 0 ? max : prev - 1);
 
   imageLoaded = url =>
     new Promise((resolve, reject) => {
@@ -113,6 +113,11 @@ class App extends Component {
 
     this.fetchAndLoad("/images.php", "backgrounds");
     this.fetchAndLoad("/logos.php", "logos");
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const videoEl = document.getElementById("video");
+    videoEl && videoEl.play();
   }
 
   componentWillUnmount() {
@@ -179,7 +184,10 @@ class App extends Component {
             <div className="slant">{project[1]}</div>
           </div>
         )}
-        <div className="logo-text" onClick={this.handleLogoClick}>Blar</div> 
+
+        <div className="logo-text" onClick={this.handleLogoClick}>
+          Blar
+        </div>
         <div
           className={`logo${this.state.moved ? " moved" : ""}${
             isAbout ? " about-logo" : ""
@@ -187,7 +195,7 @@ class App extends Component {
           style={{
             left: x,
             top: y,
-            backgroundImage: logoStyle,
+            backgroundImage: logoStyle
           }}
         />
 
@@ -207,6 +215,9 @@ class App extends Component {
             }`}
             style={{ backgroundImage: `url(${url})` }}
           >
+            {(url.includes(".mp4") || url.includes("m4v")) && (
+              <video id={"video"} autoPlay={true} loop={true} src={url} />
+            )}
             <div className="project mobile">
               <div>{this.getProject(i)[0]}</div>
               <div>&nbsp;</div>

@@ -9,7 +9,7 @@
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 $dir = "images/";
-$images = glob($dir."*.{jpg,jpeg,png,gif}", GLOB_BRACE);
+$images = glob($dir."*.{jpg,jpeg,png,gif,m4v,mp4}", GLOB_BRACE);
 $list = [];
 
 foreach($images as $image){
