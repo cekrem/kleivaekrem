@@ -230,8 +230,8 @@ class App extends Component {
         ))}
 
         <div className="footer">
-          <a onClick={e => e.stopPropagation()} href="mailto:mail@blar.design">
-            mail@blar.design
+          <a onClick={e => e.stopPropagation()} href="mailto:post@blar.design">
+            post@blar.design
           </a>
         </div>
       </div>
