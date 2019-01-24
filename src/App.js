@@ -39,6 +39,7 @@ const aboutText = [
 
 class App extends Component {
   defaultBackground = "default.jpg";
+  defaultProject = ["Metronomicon Audio Minifestival", "Flyer"];
   aboutBackground = "about.jpg";
   defaultLogo = "Blar_01.svg";
   state = {
@@ -149,13 +150,12 @@ class App extends Component {
       return false;
     }
     const activeBg = this.state.backgrounds[index];
-    return (
-      (activeBg || "").includes("images") &&
-      activeBg
-        .replace("images/", "")
-        .split(".")
-        .map(text => text.replace(/-/g, " "))
-    );
+    return (activeBg || "").includes("images")
+      ? activeBg
+          .replace("images/", "")
+          .split(".")
+          .map(text => text.replace(/-/g, " "))
+      : this.defaultProject;
   };
 
   render() {
