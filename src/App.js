@@ -185,8 +185,8 @@ class App extends Component {
           </div>
         )}
 
-        <div className="logo-text" onClick={this.handleLogoClick}>
-          Blar
+        <div className="logo-text">
+          <span onClick={this.handleLogoClick}>Blar</span>
         </div>
         <div
           className={`logo${this.state.moved ? " moved" : ""}${
