@@ -39,7 +39,7 @@ const aboutText = [
 
 class App extends Component {
   defaultBackground = "default.jpg";
-  defaultProject = ["Metronomicon Audio Minifestival", "Flyer"];
+  defaultProject = ["", ""];
   aboutBackground = "about.jpg";
   defaultLogo = "Blar_01.svg";
   state = {
